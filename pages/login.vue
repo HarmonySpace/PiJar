@@ -1,15 +1,12 @@
 <script setup lang="ts">
-definePageMeta({
-  middleware: ["authenticated"],
-});
 const supabase = useSupabaseClient().auth;
 const credentials = ref<emailCredentials>({
   email: "",
   password: "",
 });
-
 const login = async () => {
   const { error } = await supabase.signInWithPassword(credentials.value);
+  return navigateTo("/");
 };
 </script>
 

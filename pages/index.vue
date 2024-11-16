@@ -2,15 +2,12 @@
 definePageMeta({
   middleware: ["unauthenticated"],
 });
-
 const client = useSupabaseClient();
 const supabase = useSupabaseClient().auth;
-
 const loginOut = async () => {
   const { error } = await supabase.signOut();
   return navigateTo("/login");
 };
-const info = ref();
 const { data: accounts } = await useAsyncData(async () => {
   const { data, error } = await client.from("accounts").select("*");
   return data;
