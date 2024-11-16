@@ -6,5 +6,10 @@ export default defineNuxtConfig({
     "nuxt-lucide-icons",
     "@pinia/nuxt",
     "@nuxtjs/tailwindcss",
+    "@nuxtjs/supabase",
   ],
+  supabase: {
+    url: process.env.SUPABASE_URL,
+    key: process.env.SUPABASE_KEY,
+  },
 });
