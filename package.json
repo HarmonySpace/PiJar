@@ -10,7 +10,11 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxtjs/tailwindcss": "^6.12.2",
+    "@pinia/nuxt": "^0.7.0",
     "nuxt": "^3.14.159",
+    "nuxt-lucide-icons": "^1.0.5",
+    "pinia": "^2.2.6",
     "vue": "latest",
     "vue-router": "latest"
   },
