@@ -5,9 +5,9 @@
 </template>
 
 <style>
-@import "./assets/css/satoshi.css";
-
+@import "/assets/css/styles.css";
 * {
   font-family: "Satoshi-Regular";
+  color: white;
 }
 </style>
