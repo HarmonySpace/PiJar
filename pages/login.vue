@@ -1,71 +1,66 @@
 <script setup lang="ts">
-const supabase = useSupabaseClient().auth;
-const credentials = ref<emailCredentials>({
+const auth = useSupabaseClient().auth;
+const credentials = ref({
   email: "",
   password: "",
 });
 const login = async () => {
-  const { error } = await supabase.signInWithPassword(credentials.value);
-  return navigateTo("/");
+  const { error } = await auth.signInWithPassword(credentials.value);
+  if (error) {
+    console.log(error);
+  } else {
+    return navigateTo("/");
+  }
+};
+const handleEmail = (value: string) => {
+  credentials.value.email = value;
+};
+const handlePassword = (value: string) => {
+  credentials.value.password = value;
 };
 </script>
 
 <template>
   <div
-    class="flex min-h-screen flex-col items-center justify-center px-6 py-12 sm:px-0"
+    class="w-full min-h-screen flex justify-center md:justify-between items-center"
   >
-    <div class="w-full max-w-md space-y-8">
-      <div class="sm:w-96">
-        <h2 class="text-center text-3xl font-light">Login</h2>
-        <h2 class="text-center text-3xl font-regular">Login</h2>
-        <h2 class="text-center text-3xl font-bold">Login</h2>
-        <br />
-      </div>
-      <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form class="space-y-6" action="#" method="POST">
-            <div>
-              <label for="email-address" class="sr-only">Email address</label>
-              <input
-                v-model="credentials.email"
-                id="email-address"
-                name="email"
+    <div
+      class="basis-4/6 w-full h-screen bg-gradient-to-tr to-finn-500 via-medium-purple-950 from-neutral-950 rounded-e-[2rem]"
+    ></div>
+    <div
+      class="w-10/12 sm:basis-2/6 h-full flex flex-col items-center justify-center"
+    >
+      <div class="max-w-md space-y-8">
+        <div class="w-full flex flex-col items-center justify-center">
+          <p class="text-center text-xl text-finn-500">Oink!</p>
+          <h1 class="text-center text-6xl text-finn-100">Login</h1>
+          <br />
+        </div>
+        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+          <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+            <form class="space-y-6" @submit.prevent="login">
+              <InputTextFields
+                id="credentials_email"
+                label="Correo electrónico"
                 type="email"
-                autocomplete="email"
                 required
-                class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Email address"
+                placeholder="ejemplo@dominio.com"
+                @update="(value: string) => handleEmail(value)"
               />
-            </div>
-            <div>
-              <label for="password" class="sr-only">Password</label>
-              <input
-                v-model="credentials.password"
-                id="password"
-                name="password"
+              <InputTextFields
+                v-model="credentials.email"
+                id="credentials_name"
+                label="Contraseña"
                 type="password"
-                autocomplete="current-password"
                 required
-                class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Password"
+                placeholder="oink123"
+                @update="(value: string) => handlePassword(value)"
               />
-            </div>
-            <div>
-              <button
-                @click="login()"
-                type="button"
-                class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-                  <LockClosedIcon
-                    class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
-                    aria-hidden="true"
-                  />
-                </span>
-                Sign in
-              </button>
-            </div>
-          </form>
+              <div>
+                <ButtonText class="w-full" text="Acceder" variant="outlined" />
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
