@@ -8,6 +8,11 @@ const credentials = ref({
   password: "",
   passwordConfirm: "",
 });
+const alert = ref({
+  title: "Error",
+  message: "Error, las credenciales no coinciden",
+  state: true,
+});
 const correctPassword = ref(false);
 const register = async () => {
   if (correctPassword.value) {
@@ -70,7 +75,11 @@ const handlePasswordConfirm = (value: string) => {
           @update="(value: string) => handlePasswordConfirm(value)"
         />
         <div>
-          <ButtonText class="mt-8 w-full" text="Acceder" variant="outlined" />
+          <ButtonText
+            class="mt-8 w-full"
+            text="Registrarse"
+            variant="outlined"
+          />
         </div>
         <div class="w-full">
           <p class="text-center text-xl text-finn-500">
@@ -81,6 +90,17 @@ const handlePasswordConfirm = (value: string) => {
           </p>
         </div>
       </form>
+      <AlertMessage :show="alert.state">
+        <template #title>{{ alert.title }}</template>
+        <template #icon>
+          <CircleAlert />
+        </template>
+        <template>
+          <p class="text-center text-xl text-finn-500">
+            {{ alert.message }}
+          </p>
+        </template>
+      </AlertMessage>
     </template>
   </NuxtLayout>
 </template>
