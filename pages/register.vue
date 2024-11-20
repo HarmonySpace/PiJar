@@ -2,7 +2,7 @@
 definePageMeta({
   layout: false,
 });
-const auth = useSupabaseClient().auth;
+//const auth = useSupabaseClient().auth;
 const credentials = ref({
   email: "",
   password: "",
@@ -15,16 +15,17 @@ const alert = ref({
 });
 const correctPassword = ref(false);
 const register = async () => {
-  if (correctPassword.value) {
-    const { error } = await auth.signUp(credentials.value);
-    if (error) {
-      console.log(error);
-    } else {
-      return navigateTo("/");
-    }
-  } else {
-    console.log("Passwords do not match");
-  }
+  console.log("register");
+  //if (correctPassword.value) {
+  //  const { error } = await auth.signUp(credentials.value);
+  //  if (error) {
+  //    console.log(error);
+  //  } else {
+  //    return navigateTo("/");
+  //  }
+  //} else {
+  //  console.log("Passwords do not match");
+  //}
 };
 const handleEmail = (value: string) => {
   credentials.value.email = value;

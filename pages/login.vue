@@ -2,18 +2,19 @@
 definePageMeta({
   layout: false,
 });
-const auth = useSupabaseClient().auth;
+//const auth = useSupabaseClient().auth;
 const credentials = ref({
   email: "",
   password: "",
 });
 const login = async () => {
-  const { error } = await auth.signInWithPassword(credentials.value);
-  if (error) {
-    console.log(error);
-  } else {
-    return navigateTo("/");
-  }
+  console.log("login");
+  //const { error } = await auth.signInWithPassword(credentials.value);
+  //if (error) {
+  //  console.log(error);
+  //} else {
+  //  return navigateTo("/");
+  //}
 };
 const handleEmail = (value: string) => {
   credentials.value.email = value;
