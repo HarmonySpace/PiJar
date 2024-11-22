@@ -6,11 +6,10 @@ export default defineNuxtConfig({
     "nuxt-lucide-icons",
     "@pinia/nuxt",
     "@nuxtjs/tailwindcss",
-    "@nuxtjs/supabase",
+    "nuxt-appwrite",
   ],
-  supabase: {
-    url: process.env.SUPABASE_URL,
-    key: process.env.SUPABASE_KEY,
-    redirect: false,
+  appwrite: {
+    endpoint: "http://localhost/v1",
+    project: "673d3ccb001374411ea2",
   },
 });

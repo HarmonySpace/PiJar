@@ -2,22 +2,41 @@
 definePageMeta({
   middleware: ["unauthenticated"],
 });
-const client = useSupabaseClient();
-const supabase = useSupabaseClient().auth;
-const loginOut = async () => {
-  const { error } = await supabase.signOut();
+const { account, database } = useAppwrite();
+const user = ref();
+const sessions = ref();
+const userSession = ref();
+const result = ref();
+const connection = ref({
+  db: "",
+  accounts: "",
+});
+try {
+  user.value = await account.get();
+  sessions.value = await account.listSessions();
+  userSession.value = sessions.value.sessions.find(
+    (sess: any) => sess.userId === user.value.$id,
+  );
+  connection.value.db = useDatabaseId("main");
+  connection.value.accounts = useCollectionId("accounts");
+  result.value = await database.listDocuments(
+    connection.value.db,
+    connection.value.accounts,
+    [],
+  );
+} catch (err) {
+  console.log(err);
+}
+
+const logout = async () => {
+  await account.deleteSession(userSession.value.$id);
   return navigateTo("/login");
 };
-const { data: accounts } = await useAsyncData(async () => {
-  const { data, error } = await client.from("accounts").select("*");
-  return data;
-});
 </script>
 
 <template>
   <div>
     <h1>Hello world</h1>
-    <button @click="loginOut()">Logout</button>
-    <h2>{{ accounts }}</h2>
+    <button @click="logout()">Logout</button>
   </div>
 </template>

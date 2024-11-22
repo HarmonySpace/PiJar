@@ -1,25 +1,25 @@
 <script setup lang="ts">
 definePageMeta({
   layout: false,
+  middleware: ["authenticated"],
 });
-const auth = useSupabaseClient().auth;
-const credentials = ref({
-  email: "",
-  password: "",
-});
+
+const { account } = useAppwrite();
+
+const email = ref("");
+const password = ref("");
+
 const login = async () => {
-  const { error } = await auth.signInWithPassword(credentials.value);
-  if (error) {
-    console.log(error);
-  } else {
-    return navigateTo("/");
+  const res = await loginAuth(email.value, password.value);
+  if (!res) {
   }
 };
+
 const handleEmail = (value: string) => {
-  credentials.value.email = value;
+  email.value = value;
 };
 const handlePassword = (value: string) => {
-  credentials.value.password = value;
+  password.value = value;
 };
 </script>
 

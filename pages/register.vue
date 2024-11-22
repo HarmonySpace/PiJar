@@ -1,44 +1,54 @@
 <script setup lang="ts">
 definePageMeta({
   layout: false,
+  middleware: ["authenticated"],
 });
-const auth = useSupabaseClient().auth;
-const credentials = ref({
-  email: "",
-  password: "",
-  passwordConfirm: "",
-});
+
 const alert = ref({
   title: "Error",
-  message: "Error, las credenciales no coinciden",
-  state: true,
+  message: "Las credenciales no coinciden",
+  state: false,
 });
-const correctPassword = ref(false);
-const register = async () => {
-  if (correctPassword.value) {
-    const { error } = await auth.signUp(credentials.value);
-    if (error) {
-      console.log(error);
-    } else {
-      return navigateTo("/");
-    }
-  } else {
-    console.log("Passwords do not match");
-  }
-};
+
+const user = ref({
+  email: "",
+  password: "",
+  password2: "",
+  loggedInUser: null,
+});
+
 const handleEmail = (value: string) => {
-  credentials.value.email = value;
+  user.value.email = value;
 };
 const handlePassword = (value: string) => {
-  credentials.value.password = value;
+  user.value.password = value;
 };
-const handlePasswordConfirm = (value: string) => {
-  credentials.value.passwordConfirm = value;
-  if (credentials.value.password !== credentials.value.passwordConfirm) {
-    console.log("Passwords do not match");
-  } else {
-    correctPassword.value = true;
+const handlepassword2 = (value: string) => {
+  user.value.password2 = value;
+};
+
+const submit = async () => {
+  const credentials = ref(false);
+  credentials.value = confirmPassword();
+  alert.value.state = !credentials.value;
+  if (alert.value.state) {
+    alert.value.message = "La contraseña no coincide";
   }
+  await register();
+};
+const register = async () => {
+  await account.create(ID.unique(), user.value.email, user.value.password);
+  login();
+};
+const login = async () => {
+  await account.createEmailPasswordSession(
+    user.value.email,
+    user.value.password,
+  );
+  user.value.loggedInUser = (await account.get()) as any;
+};
+const confirmPassword = () => {
+  return user.value.password === user.value.password2 ? true : false;
 };
 </script>
 
@@ -49,9 +59,9 @@ const handlePasswordConfirm = (value: string) => {
   >
     <template #title>Registrarse</template>
     <template #form>
-      <form class="space-y-6" @submit.prevent="register()">
+      <form class="space-y-6" @submit.prevent="submit()">
         <InputTextFields
-          id="credentials_email"
+          id="user_email"
           label="Correo electrónico"
           type="email"
           required
@@ -59,20 +69,20 @@ const handlePasswordConfirm = (value: string) => {
           @update="(value: string) => handleEmail(value)"
         />
         <InputTextFields
-          id="credentials_password"
+          id="user_password"
           label="Contraseña"
           type="password"
           required
-          placeholder="oink123"
+          placeholder="oink1234"
           @update="(value: string) => handlePassword(value)"
         />
         <InputTextFields
-          id="credentials_password"
+          id="user_password2"
           label="Confirmar contraseña"
           type="password"
           required
-          placeholder="oink123"
-          @update="(value: string) => handlePasswordConfirm(value)"
+          placeholder="oink1234"
+          @update="(value: string) => handlepassword2(value)"
         />
         <div>
           <ButtonText
@@ -90,12 +100,13 @@ const handlePasswordConfirm = (value: string) => {
           </p>
         </div>
       </form>
-      <AlertMessage :show="alert.state">
+      <AlertMessage
+        :show="alert.state"
+        @close="alert.state = false"
+        class="absolute bottom-10 right-10"
+      >
         <template #title>{{ alert.title }}</template>
-        <template #icon>
-          <CircleAlert />
-        </template>
-        <template>
+        <template #default>
           <p class="text-center text-xl text-finn-500">
             {{ alert.message }}
           </p>
