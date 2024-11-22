@@ -20,6 +20,9 @@ importers:
       nuxt:
         specifier: ^3.14.159
         version: 3.14.159(@biomejs/biome@1.9.4)(@parcel/watcher@2.5.0)(@types/node@22.9.0)(ioredis@5.4.1)(magicast@0.3.5)(rollup@4.26.0)(terser@5.36.0)(typescript@5.6.3)(vite@5.4.11(@types/node@22.9.0)(terser@5.36.0))
+      nuxt-appwrite:
+        specifier: ^1.1.1
+        version: 1.1.1(magicast@0.3.5)(rollup@4.26.0)
       nuxt-lucide-icons:
         specifier: ^1.0.5
         version: 1.0.5(magicast@0.3.5)(rollup@4.26.0)(vue@3.5.12(typescript@5.6.3))
@@ -1136,6 +1139,9 @@ packages:
   app-root-path@2.1.0:
     resolution: {integrity: sha512-z5BqVjscbjmJBybKlICogJR2jCr2q/Ixu7Pvui5D4y97i7FLsJlvEG9XOR/KJRlkxxZz7UaaS2TMwQh1dRJ2dA==}
     engines: {node: '>= 4.0.0'}
+
+  appwrite@15.0.0:
+    resolution: {integrity: sha512-rzmo+87tizYLs3YnRLets+vMUF85S/OHkgiGgp0UKcKJj0U1RktAsuIecFqRROKfkqs0fKzggRAIs3RCoYQQwA==}
 
   appwrite@16.0.2:
     resolution: {integrity: sha512-sCMVOe9wdB8OneIz6LtoYhp797GEXoudAdygNZgezPiybGOlMPcQ8kP1c/FW1eES0ledaqgaZ0PHb+LwZia8pw==}
@@ -2812,6 +2818,9 @@ packages:
     resolution: {integrity: sha512-ZVu45nuDrdb7nzKW2kLGY/N1vvFYLLbUVX6gUYw4BApKGGu4+GktTR5o48dGVgMYX9A8chaugl7TL9ZYmwC9Mg==}
     engines: {node: ^16.10.0 || >=18.0.0}
     hasBin: true
+
+  nuxt-appwrite@1.1.1:
+    resolution: {integrity: sha512-zvALWUooj9H053x5v0CPAZtJFCyqx7OY0U+3US7SXR2Vrl/KFXj2rJuG/FwHR4yuUacSVS0VYlxxquCuIWVq+g==}
 
   nuxt-lucide-icons@1.0.5:
     resolution: {integrity: sha512-Mq9lFnPZu9VoIRPxbayGEyxpso9GpccJS3dqI88oiyrcXI6ZA/Qi+jHSKvYmmbZccZGyroxRQlfa58tGN5SmLw==}
@@ -5378,6 +5387,8 @@ snapshots:
 
   app-root-path@2.1.0: {}
 
+  appwrite@15.0.0: {}
+
   appwrite@16.0.2: {}
 
   aproba@2.0.0: {}
@@ -7257,6 +7268,15 @@ snapshots:
       boolbase: 1.0.0
 
   nuxi@3.15.0: {}
+
+  nuxt-appwrite@1.1.1(magicast@0.3.5)(rollup@4.26.0):
+    dependencies:
+      '@nuxt/kit': 3.14.159(magicast@0.3.5)(rollup@4.26.0)
+      appwrite: 15.0.0
+    transitivePeerDependencies:
+      - magicast
+      - rollup
+      - supports-color
 
   nuxt-lucide-icons@1.0.5(magicast@0.3.5)(rollup@4.26.0)(vue@3.5.12(typescript@5.6.3)):
     dependencies:
