@@ -1,20 +1,18 @@
 <script setup lang="ts">
+import { ID } from "appwrite";
 definePageMeta({
   layout: false,
-  middleware: ["authenticated"],
 });
-
+const appwrite = useAppwriteStore();
 const alert = ref({
   title: "Error",
   message: "Las credenciales no coinciden",
   state: false,
 });
-
 const user = ref({
   email: "",
   password: "",
   password2: "",
-  loggedInUser: null,
 });
 
 const handleEmail = (value: string) => {
@@ -37,15 +35,8 @@ const submit = async () => {
   await register();
 };
 const register = async () => {
-  await account.create(ID.unique(), user.value.email, user.value.password);
-  login();
-};
-const login = async () => {
-  await account.createEmailPasswordSession(
-    user.value.email,
-    user.value.password,
-  );
-  user.value.loggedInUser = (await account.get()) as any;
+  await appwrite.acc.create(ID.unique(), user.value.email, user.value.password);
+  return navigateTo("/login");
 };
 const confirmPassword = () => {
   return user.value.password === user.value.password2 ? true : false;
