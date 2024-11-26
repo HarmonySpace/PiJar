@@ -10,7 +10,7 @@ const props = defineProps({
   },
   valueRef: {
     type: String,
-    required: true,
+    required: false,
   },
   type: {
     type: String,
@@ -33,11 +33,6 @@ const emit = defineEmits(["update"]);
 const handleInput = () => {
   emit("update", inputRef.value);
 };
-//const emit = defineEmits(["update:valueRef"]);
-//const handleInput = (event: Event) => {
-//  const target = event.target as HTMLInputElement;
-//  emit("update:valueRef", target.value);
-//};
 </script>
 
 <template>
