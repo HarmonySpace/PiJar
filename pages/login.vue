@@ -4,22 +4,21 @@ definePageMeta({
   middleware: ["authenticated"],
 });
 
-const { account } = useAppwrite();
+const appwrite = useAppwriteStore();
 
 const email = ref("");
 const password = ref("");
-
-const login = async () => {
-  const res = await loginAuth(email.value, password.value);
-  if (!res) {
-  }
-};
 
 const handleEmail = (value: string) => {
   email.value = value;
 };
 const handlePassword = (value: string) => {
   password.value = value;
+};
+
+const login = async () => {
+  await appwrite.acc.createEmailPasswordSession(email.value, password.value);
+  return navigateTo("/");
 };
 </script>
 
